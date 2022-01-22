@@ -124,7 +124,7 @@ REST API должен поддерживать следующие рауты.
 
 Создай аккаунт на [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). После чего в аккаунте создай новый проект и настрой **бесплатный кластер**. Во время настройки кластера выбери провайдера и регион как на скриншоте ниже. Если выбрать слишком удаленный регион, скорость ответа сервера будет дольше.
 
-![atlas cluster setup](./atlas-cluster.jpg)
+![atlas cluster setup](https://github.com/goitacademy/nodejs-homework/blob/master/homework-03/atlas-cluster.jpg)
 
 ## Шаг 2
 
@@ -132,17 +132,17 @@ REST API должен поддерживать следующие рауты.
 
 ## Шаг 3
 
-Через Compass создай базу данных `db-contacts` и в ней коллекцию `contacts`. Возьми [ссылка на json](./contacts.json) и при помощи Compass наполни коллекцию `contacts` (сделай импорт) его содержимым.
+Через Compass создай базу данных `db-contacts` и в ней коллекцию `contacts`. Возьми [ссылка на json](https://github.com/goitacademy/nodejs-homework/blob/master/homework-03/contacts.json) и при помощи Compass наполни коллекцию `contacts` (сделай импорт) его содержимым.
 
-![data](./json-data.png)
+![data](https://github.com/goitacademy/nodejs-homework/blob/master/homework-03/json-data.png)
 
 Если вы все сделали правильно, данные должны появиться в вашей базе в коллекции `contacts`
 
-![data](./mongo-data.png)
+![data](https://github.com/goitacademy/nodejs-homework/blob/master/homework-03/mongo-data.png)
 
 ## Шаг 4
 
-Используйте исходный код [домашней работы #2](../homework-02/README.md) и замените хранение контактов из json-файла на созданную вами базу данных.
+Используйте исходный код [домашней работы #2](https://github.com/Eduard-Konovka/nodejs-homework-rest-api/tree/hw02-express) и замените хранение контактов из json-файла на созданную вами базу данных.
 
 - Напишите код для создания подключения к MongoDB при помощи [Mongoose](https://mongoosejs.com/).
 - При успешном подключении выведите в консоль сообщение `"Database connection successful"`.
