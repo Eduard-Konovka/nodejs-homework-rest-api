@@ -16,7 +16,7 @@ const remove = async (req, res) => {
     },
   });
   console.log("\nRemoved contact: ");
-  console.log(result);
+  console.table(JSON.parse(JSON.stringify(result)));
 };
 
 module.exports = remove;

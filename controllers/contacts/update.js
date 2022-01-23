@@ -17,7 +17,7 @@ const update = async (req, res) => {
     },
   });
   console.log("\nUpdated contact: ");
-  console.log(result);
+  console.table(JSON.parse(JSON.stringify(result)));
 };
 
 module.exports = update;

@@ -10,7 +10,7 @@ const getList = async (_, res) => {
     },
   });
   console.log("\nContacts list: ");
-  console.log(result);
+  console.table(JSON.parse(JSON.stringify(result)));
 };
 
 module.exports = getList;

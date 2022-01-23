@@ -15,7 +15,7 @@ const getById = async (req, res) => {
     },
   });
   console.log("\nContact by id: ");
-  console.log(result);
+  console.table(JSON.parse(JSON.stringify(result)));
 };
 
 module.exports = getById;
