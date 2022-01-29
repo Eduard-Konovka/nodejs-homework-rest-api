@@ -4,9 +4,11 @@ const { Contact } = require("../../models/contact");
 const getById = async (req, res) => {
   const { contactId } = req.params;
   const result = await Contact.findById(contactId); // или Contact.findOne({_id: contactId})
+
   if (!result) {
-    throw new NotFound(404, `Contact with id = ${contactId} not found!`);
+    throw new NotFound(404, `Contact with id ${contactId} not found!`);
   }
+
   res.json({
     status: "success",
     code: 200,
@@ -14,6 +16,7 @@ const getById = async (req, res) => {
       result,
     },
   });
+
   console.log("\nContact by id: ");
   console.table(JSON.parse(JSON.stringify(result)));
 };

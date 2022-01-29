@@ -2,6 +2,7 @@ const { Contact } = require("../../models/contact");
 
 const getList = async (_, res) => {
   const result = await Contact.find({}, "-createdAt -updatedAt");
+
   res.json({
     status: "success",
     code: 200,
@@ -9,6 +10,7 @@ const getList = async (_, res) => {
       result,
     },
   });
+
   console.log("\nContacts list: ");
   console.table(JSON.parse(JSON.stringify(result)));
 };
