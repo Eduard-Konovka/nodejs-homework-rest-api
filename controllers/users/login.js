@@ -28,10 +28,16 @@ const login = async (req, res) => {
     code: 200,
     data: {
       token,
+      user: {
+        email: user.email,
+        subscription: user.subscription,
+      },
     },
   });
 
-  console.log("\nGot a token: ", JSON.parse(JSON.stringify(token)));
+  console.log("\nGot a token: ", token);
+  console.log("\nUser: ");
+  console.table(JSON.parse(JSON.stringify(user)));
 };
 
 module.exports = login;
