@@ -3,16 +3,16 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../../models/user");
 
 const signup = async (req, res) => {
-  const { owner, email, password, subscription, token } = req.body;
+  const { email, password, subscription, token } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
     throw new Conflict(409, `Email ${email} in use!`);
   }
 
-  const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
   const result = await User.create({
-    owner,
     email,
     password: hashPassword,
     subscription,

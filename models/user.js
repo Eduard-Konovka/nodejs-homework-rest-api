@@ -6,9 +6,6 @@ const emailRegExp = /.+@.+\..+/i;
 
 const userSchema = Schema(
   {
-    owner: {
-      type: String,
-    },
     email: {
       type: String,
       match: emailRegExp,
@@ -36,7 +33,6 @@ const userSchema = Schema(
 );
 
 const joiSignupSchema = Joi.object({
-  owner: Joi.string().required(),
   email: Joi.string()
     .email({
       minDomainSegments: 2,
