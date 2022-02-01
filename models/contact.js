@@ -16,16 +16,23 @@ const contactSchema = Schema(
     },
     email: {
       type: String,
+      unique: true,
       required: true,
     },
     phone: {
       type: String,
       match: phoneRegExp,
+      unique: true,
       required: true,
     },
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
     },
   },
   { versionKey: false, timestamps: true }
