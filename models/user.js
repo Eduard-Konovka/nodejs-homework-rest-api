@@ -32,7 +32,7 @@ const userSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const joiSignupSchema = Joi.object({
+const signupJoiSchema = Joi.object({
   email: Joi.string()
     .email({
       minDomainSegments: 2,
@@ -44,7 +44,7 @@ const joiSignupSchema = Joi.object({
   token: Joi.string(),
 });
 
-const joiLoginSchema = Joi.object({
+const loginJoiSchema = Joi.object({
   email: Joi.string()
     .email({
       minDomainSegments: 2,
@@ -54,10 +54,15 @@ const joiLoginSchema = Joi.object({
   password: Joi.string().min(8).max(50).pattern(passRegExp).required(),
 });
 
+const subscriptionJoiSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   User,
-  joiSignupSchema,
-  joiLoginSchema,
+  signupJoiSchema,
+  loginJoiSchema,
+  subscriptionJoiSchema,
 };

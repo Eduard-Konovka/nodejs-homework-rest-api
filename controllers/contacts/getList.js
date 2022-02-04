@@ -1,11 +1,13 @@
-const { Contact } = require("../../models/contact");
+const { Contact } = require("../../models");
 
 const getList = async (req, res) => {
   const { _id } = req.user;
-  const { page, limit } = req.query;
+  const { page = 1, limit = 20, favorite } = req.query;
   const skip = (page - 1) * limit;
 
-  const result = await Contact.find({ owner: _id }, "-createdAt -updatedAt", {
+  const query = favorite ? { owner: _id, favorite } : { owner: _id };
+
+  const result = await Contact.find(query, "-createdAt -updatedAt", {
     skip,
     limit: Number(limit),
   }).populate("owner", "_id email subscription");
@@ -18,7 +20,10 @@ const getList = async (req, res) => {
     },
   });
 
-  console.log("\nContacts list: ");
+  const statusList = favorite
+    ? "\nFavorite contacts list: "
+    : "\nContacts list: ";
+  console.log(statusList);
   console.table(JSON.parse(JSON.stringify(result)));
 };
 

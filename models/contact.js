@@ -38,7 +38,7 @@ const contactSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const joiSchema = Joi.object({
+const contactJoiSchema = Joi.object({
   name: Joi.string().pattern(nameRegExp).required(),
   phone: Joi.string().pattern(phoneRegExp).required(),
   email: Joi.string()
@@ -57,6 +57,6 @@ const Contact = model("contact", contactSchema);
 
 module.exports = {
   Contact,
-  joiSchema,
+  contactJoiSchema,
   favoriteJoiSchema,
 };

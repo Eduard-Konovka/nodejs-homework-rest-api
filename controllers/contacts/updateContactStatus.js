@@ -1,7 +1,7 @@
 const { BadRequest, NotFound } = require("http-errors");
-const { Contact } = require("../../models/contact");
+const { Contact } = require("../../models");
 
-const updateStatusContact = async (req, res) => {
+const updateContactStatus = async (req, res) => {
   const { contactId } = req.params;
   const { favorite } = req.body;
 
@@ -33,4 +33,4 @@ const updateStatusContact = async (req, res) => {
   console.table(JSON.parse(JSON.stringify(result)));
 };
 
-module.exports = updateStatusContact;
+module.exports = updateContactStatus;
