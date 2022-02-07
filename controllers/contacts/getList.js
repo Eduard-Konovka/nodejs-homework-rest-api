@@ -13,13 +13,6 @@ const getList = async (req, res) => {
     .limit(parseInt(limit))
     .sort(sort)
     .populate("owner", "_id email subscription");
-  // // Альтернатива:
-  // const result = await Contact.find(query, "-createdAt -updatedAt", {
-  //   skip,
-  //   limit: Number(limit),
-  // })
-  //   .sort({ name: 1 })
-  //   .populate("owner", "_id email subscription");
 
   res.json({
     status: "success",
