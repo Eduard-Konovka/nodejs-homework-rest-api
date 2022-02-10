@@ -5,13 +5,11 @@ const storage = new Storage();
 const bucketName = "contactbook";
 
 const uploadFile = async (req, res) => {
-  const filePath = `./temp/${req.file.filename}`;
-
-  await storage.bucket(bucketName).upload(filePath, {
+  await storage.bucket(bucketName).upload(req.file.path, {
     destination: req.file.filename,
   });
 
-  await fs.unlink(filePath);
+  await fs.unlink(req.file.path);
 
   res.status(201).json({
     status: "success",

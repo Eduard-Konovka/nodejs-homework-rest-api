@@ -1,12 +1,14 @@
 const fs = require("fs").promises;
+const path = require("path");
 const { Storage } = require("@google-cloud/storage");
 
 const storage = new Storage();
 const bucketName = "contactbook";
+const tempDir = path.join(__dirname, "../../", "temp");
 
 const downloadFile = async (req, res) => {
   const { fileName } = req.params;
-  const destFileName = `./public/avatars/${fileName}`;
+  const destFileName = path.join(tempDir, fileName);
 
   await storage
     .bucket(bucketName)
@@ -16,7 +18,7 @@ const downloadFile = async (req, res) => {
   res.download(destFileName);
 
   setTimeout(() => {
-    fs.unlink(`./public/avatars/${fileName}`);
+    fs.unlink(destFileName);
   }, 100);
 
   console.log(`\nFile ${fileName} downloaded successfully!`);
