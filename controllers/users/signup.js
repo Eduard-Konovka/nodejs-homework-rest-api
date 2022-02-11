@@ -1,9 +1,13 @@
 const Conflict = require("http-errors");
 const bcrypt = require("bcryptjs");
+const md5 = require("md5");
 const { User } = require("../../models");
 
 const signup = async (req, res) => {
   const { email, password, subscription, token } = req.body;
+  const address = String(email).trim().toLowerCase();
+  const hash = md5(address);
+  const avatarURL = `https://www.gravatar.com/avatar/${hash}`;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -12,10 +16,12 @@ const signup = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
+
   const result = await User.create({
     email,
     password: hashPassword,
     subscription,
+    avatarURL,
     token,
   });
 
