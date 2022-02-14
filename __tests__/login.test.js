@@ -51,8 +51,6 @@ describe("test login function", () => {
     },
   };
 
-  const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "24h" });
-
   const mockRes = {
     status: function (data = 200) {
       return data;
@@ -61,6 +59,8 @@ describe("test login function", () => {
       return data;
     },
   };
+
+  const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "24h" });
 
   const result = {
     status: "success",
