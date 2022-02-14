@@ -30,60 +30,74 @@
 
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const login = require("../controllers/users/loginMock");
+const login = require("../controllers/users/login");
 const { User } = require("../models");
 const { SECRET_KEY } = process.env;
 
-const mockRes = {
-  _id: "6206c09f98cf6c5422faf57f",
-  email: "good-email@gmail.com",
-  password: "$2a$10$mL4687XTtz7ZM7B7JUix9u5cqx3jrNkK36247lfsOb34Fj.KeTbIG",
-  subscription: "starter",
-  avatarURL: "https://www.gravatar.com/avatar/3d6131413283e654a7401aa32da93dc8",
-};
-
 describe("test login function", () => {
+  const user = {
+    _id: "6206c09f98cf6c5422faf57f",
+    email: "good-email@gmail.com",
+    password: "$2a$10$mL4687XTtz7ZM7B7JUix9u5cqx3jrNkK36247lfsOb34Fj.KeTbIG",
+    subscription: "starter",
+    avatarURL:
+      "https://www.gravatar.com/avatar/3d6131413283e654a7401aa32da93dc8",
+  };
+
+  const mockReq = {
+    body: {
+      email: "good-email@gmail.com",
+      password: "good0Pasword",
+    },
+  };
+
+  const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "24h" });
+
+  const mockRes = {
+    status: function (data = 200) {
+      return data;
+    },
+    json: function (data) {
+      return data;
+    },
+  };
+
+  const result = {
+    status: "success",
+    code: 200,
+    data: {
+      token,
+      user: {
+        email: user.email,
+        subscription: user.subscription,
+      },
+    },
+  };
+
   test("1. Нормальный возврат", async () => {
-    const mockReq = {
-      body: {
-        email: "good-email@gmail.com",
-        password: "good0Pasword",
-      },
-    };
+    jest.spyOn(User, "findOne").mockImplementation(async () => user);
 
-    const payload = {
-      id: mockRes._id,
-    };
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
-
-    const response = {
-      status: "success",
-      code: 200,
-      data: {
-        token,
-        user: {
-          email: mockRes.email,
-          subscription: mockRes.subscription,
-        },
-      },
-    };
-
-    jest.spyOn(User, "findOne").mockImplementation(async () => mockRes);
+    let returnId = "";
+    let returnToken = "";
     jest
       .spyOn(User, "findByIdAndUpdate")
-      .mockImplementation(async (id, { token }) =>
-        console.log(
-          "User.findByIdAndUpdate function work: ",
-          "\nid ---> ",
-          id,
-          "\ntoken --->",
-          token
-        )
-      );
+      .mockImplementation(async (id, { token }) => {
+        returnId = id;
+        returnToken = token;
+      });
 
-    const resalt = await login(mockReq, mockRes);
+    let returnJson = {};
+    jest
+      .spyOn(mockRes, "json")
+      .mockImplementation(async (json) => (returnJson = json));
 
-    expect(resalt).toEqual(response);
+    jest.spyOn(console, "log").mockImplementation(jest.fn());
+
+    await login(mockReq, mockRes);
+
+    expect(returnId).toEqual(user._id);
+    expect(returnToken).toEqual(token);
+    expect(returnJson).toEqual(result);
   });
 
   test("2. Нет входных данных", async () => {
@@ -115,7 +129,7 @@ describe("test login function", () => {
       },
     };
 
-    jest.spyOn(User, "findOne").mockImplementation(async () => mockRes);
+    jest.spyOn(User, "findOne").mockImplementation(async () => user);
 
     await expect(login(badPassword, mockRes)).rejects.toThrow(
       `Password ${badPassword.body.password} is wrong!`
