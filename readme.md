@@ -538,23 +538,23 @@ ResponseBody: {
 - Зарегистрируйся на [SendGrid](https://sendgrid.com/).
 - Создай email-отправителя. Для это в административной панели SendGrid зайдите в меню Marketing в подменю senders и в правом верхнем углу нажмите кнопку "Create New Sender". Заполните необходимые поля в предложенной форме. Сохраните. Должен получится следующий как на картинке результат, только с вашим email:
 
-![sender](sender-not-verify.png)
+![sender](https://github.com/goitacademy/nodejs-homework/blob/master/homework-06/sender-not-verify.png)
 
 На указанный email должно прийти письмо верификации (проверьте спам если не видите письма). Кликните на ссылку в нем и завершите процесс. Результат должен изменится на:
 
-![sender](sender-verify.png)
+![sender](https://github.com/goitacademy/nodejs-homework/blob/master/homework-06/sender-verify.png)
 
 - Теперь необходимо создать API токен доступа. Выбираем меню "Email API", и подменю "Integration Guide". Здесь выбираем "Web API"
 
-![api-key](web-api.png)
+![api-key](https://github.com/goitacademy/nodejs-homework/blob/master/homework-06/web-api.png)
 
 Дальше необходимо выбрать технологию Node.js
 
-![api-key](node.png)
+![api-key](https://github.com/goitacademy/nodejs-homework/blob/master/homework-06/node.png)
 
 На третьем шаге даем имя нашему токену. Например systemcats, нажимаем кнопку сгенерировать и получаем результат как на скриншоте ниже. Необходимо скопировать этот токен (это важно, так как больше вы не сможете его посмотреть). После завершить процесс создания токена
 
-![api-key](api-key.png)
+![api-key](https://github.com/goitacademy/nodejs-homework/blob/master/homework-06/api-key.png)
 
 - Полученный API-токен надо добавить в `.env` файл в нашем проекте.
 
