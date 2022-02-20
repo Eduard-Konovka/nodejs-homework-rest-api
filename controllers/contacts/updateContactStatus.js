@@ -1,4 +1,4 @@
-const { BadRequest, NotFound } = require("http-errors");
+const createError = require("http-errors");
 const { Contact } = require("../../models");
 
 const updateContactStatus = async (req, res) => {
@@ -6,7 +6,7 @@ const updateContactStatus = async (req, res) => {
   const { favorite } = req.body;
 
   if (!req.body) {
-    throw new BadRequest(400, "Missing field favorite!");
+    throw createError(400, "Missing field favorite!");
   }
 
   const result = await Contact.findByIdAndUpdate(
@@ -18,7 +18,7 @@ const updateContactStatus = async (req, res) => {
   );
 
   if (!result) {
-    throw new NotFound(404, `Contact with id ${contactId} not found!`);
+    throw createError(404, `Contact with id ${contactId} not found!`);
   }
 
   res.json({

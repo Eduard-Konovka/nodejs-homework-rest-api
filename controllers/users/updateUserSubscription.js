@@ -1,4 +1,4 @@
-const { BadRequest } = require("http-errors");
+const createError = require("http-errors");
 const { User } = require("../../models");
 
 const updateUserSubscription = async (req, res) => {
@@ -6,7 +6,7 @@ const updateUserSubscription = async (req, res) => {
   const { subscription } = req.body;
 
   if (!req.body) {
-    throw new BadRequest(400, "Missing field of subscription!");
+    throw createError(400, "Missing field of subscription!");
   }
 
   const result = await User.findByIdAndUpdate(

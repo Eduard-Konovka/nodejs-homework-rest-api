@@ -1,4 +1,4 @@
-const NotFound = require("http-errors");
+const createError = require("http-errors");
 const { Contact } = require("../../models");
 
 const update = async (req, res) => {
@@ -8,7 +8,7 @@ const update = async (req, res) => {
   });
 
   if (!result) {
-    throw new NotFound(404, `Contact with id ${contactId} not found!`);
+    throw createError(404, `Contact with id ${contactId} not found!`);
   }
 
   res.json({
