@@ -24,8 +24,9 @@
 -------------------------------
 1. Нормальный возврат.
 2. Нет входных данных.
-3. Непрвильная почта. 
-4. Неправильный пароль.
+3. Не подтверждена почта. 
+4. Непрвильная почта.
+5. Неправильный пароль.
 ============================ */
 
 require("dotenv").config();
@@ -42,6 +43,8 @@ describe("test login function", () => {
     subscription: "starter",
     avatarURL:
       "https://www.gravatar.com/avatar/3d6131413283e654a7401aa32da93dc8",
+    verify: true,
+    verificationToken: "98745129875124987542928476",
   };
 
   const mockReq = {
@@ -106,7 +109,25 @@ describe("test login function", () => {
     );
   });
 
-  test("3. Неправильная почта", async () => {
+  test("3. Не подтверждена почта", async () => {
+    const notVerify = {
+      body: {
+        email: "good-email@gmail.com",
+      },
+    };
+
+    const userNotVerify = {
+      verify: false,
+    };
+
+    jest.spyOn(User, "findOne").mockImplementation(async () => userNotVerify);
+
+    await expect(login(notVerify, mockRes)).rejects.toThrow(
+      `Email ${notVerify.body.email} is not verify!`
+    );
+  });
+
+  test("4. Неправильная почта", async () => {
     const badEmail = {
       body: {
         email: "bad-email@gmail.com",
@@ -121,7 +142,7 @@ describe("test login function", () => {
     );
   });
 
-  test("4. Неправильный пароль", async () => {
+  test("5. Неправильный пароль", async () => {
     const badPassword = {
       body: {
         email: "good-email@gmail.com",
